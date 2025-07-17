@@ -1,0 +1,11 @@
+{
+    "name": "Rust-dev",
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "workspaceFolder": "/workspace",
+    "remoteUser": "vscode",
+    "containerUser": "vscode",
+    "forwardPorts": [3000, 3001, 8080, 8081],
+    "features": {}
+}
