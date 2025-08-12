@@ -1,5 +1,5 @@
 services:
-    dev:
+    devpod-dev:
         build:
             context: ".."
             dockerfile: ".devcontainer/Dockerfile"
@@ -8,5 +8,4 @@ services:
             # mounts are relative to the first file in the list, which is a level up.
             - "..:/workspace:cached"
         env_file:
-            - "../.env"
-        command: '/bin/sh -c "while sleep 1000; do :; done"'
+            - ".devcontainer/devcontainer.env"
