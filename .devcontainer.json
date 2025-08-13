@@ -1,6 +1,6 @@
 {
     "name": "devpod-dev",
-    "dockerComposeFile": ["dev/compose.yml"],
+    "dockerComposeFile": ["rust-dev/dev/compose.yml"],
     "service": "dev",
     "workspaceFolder": "/workspace",
     "remoteUser": "dev-user",
