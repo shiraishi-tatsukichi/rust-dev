@@ -1,6 +1,1 @@
 FROM rust-base:latest
-ARG USERNAME=dev-user
-ARG USER_UID=1000
-ARG USER_GID=${USER_UID}
-
-USER ${USERNAME}
