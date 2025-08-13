@@ -12,5 +12,5 @@ services:
         volumes:
             - "../../:/workspace:cached"
         env_file:
-            - "devcontainer.env"
+            - "../../.devcontainer.env"
         command: /bin/sh -c "while sleep 1000; do :; done"
