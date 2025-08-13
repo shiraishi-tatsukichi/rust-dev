@@ -4,8 +4,16 @@
     "service": "dev",
     "workspaceFolder": "/workspace",
     "remoteUser": "dev-user",
-    "containerUser": "dev-user",
     "forwardPorts": [3000, 3001, 8080, 8081],
     "shutdownAction": "stopCompose",
-    "features": {}
+    "features": {
+        "ghcr.io/devcontainers/features/common-utils:2": {
+            "installZsh": "true",
+            "installOhMyZsh": "false",
+            "username": "dev-user",
+            "userUid": "1000",
+            "userGid": "1000",
+            "upgradePackages": "false"
+        }
+    }
 }
