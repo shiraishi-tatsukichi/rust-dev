@@ -1,0 +1,17 @@
+services:
+    base:
+        extends:
+            file: "../base/compose.yml"
+            service: "base"
+    dev:
+        depends_on:
+            - "base"
+        build:
+            context: "."
+            dockerfile: "Dockerfile"
+        container_name: "rust-dev"
+        volumes:
+            - "../../:/workspace:cached"
+        env_file:
+            - "devcontainer.env"
+        command: /bin/sh -c "while sleep 1000; do :; done"
