@@ -1,11 +1,19 @@
 {
     "name": "devpod-dev",
-    "dockerComposeFile": ["compose.yaml"],
-    "service": "devpod-dev",
+    "dockerComposeFile": ["../docker/dev/compose.yml"],
+    "service": "dev",
     "workspaceFolder": "/workspace",
-    "remoteUser": "vscode",
-    "containerUser": "vscode",
+    "remoteUser": "dev-user",
     "forwardPorts": [3000, 3001, 8080, 8081],
     "shutdownAction": "stopCompose",
-    "features": {}
+    "features": {
+        "ghcr.io/devcontainers/features/common-utils:2": {
+            "installZsh": "true",
+            "installOhMyZsh": "false",
+            "username": "dev-user",
+            "userUid": "1000",
+            "userGid": "1000",
+            "upgradePackages": "false"
+        }
+    }
 }
