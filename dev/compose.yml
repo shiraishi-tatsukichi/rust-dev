@@ -9,7 +9,6 @@ services:
         build:
             context: "."
             dockerfile: "Dockerfile"
-        container_name: "rust-dev"
         volumes:
             - "../../:/workspace:cached"
         env_file:
