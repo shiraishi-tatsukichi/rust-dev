@@ -1,5 +1,7 @@
 FROM docker.io/rustlang/rust:nightly-bookworm
 ARG RUSTUP_TARGETS="wasm32-unknown-unknown x86_64-unknown-linux-gnu"
+
+USER root
 RUN rustup target add ${RUSTUP_TARGETS}
 
 RUN curl -sSL https://github.com/cargo-bins/cargo-binstall/releases/latest/download/cargo-binstall-x86_64-unknown-linux-musl.tgz \
