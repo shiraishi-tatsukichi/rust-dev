@@ -1,5 +1,6 @@
 FROM docker.io/rustlang/rust:nightly-bookworm
 ARG RUSTUP_TARGETS="wasm32-unknown-unknown x86_64-unknown-linux-gnu"
+ARG RUSTUP_COMPONENTS="rustc cargo rustfmt rust-analyzer"
 ARG DEVS_GROUPNAME="devs"
 ARG DEVS_GID="999"
 ARG BUILDER_USERNAME="builder"
@@ -18,6 +19,9 @@ RUN chown ${BUILDER_USERNAME}:${DEVS_GROUPNAME} /usr/local/rustup &&\
 
 USER ${BUILDER_USERNAME}
 RUN rustup target add ${RUSTUP_TARGETS}
+RUN rustup component add ${RUSTUP_COMPONENTS}
+RUN rustup toolchain install nightly
+RUN rustup update
 
 RUN curl -sSL https://github.com/cargo-bins/cargo-binstall/releases/latest/download/cargo-binstall-x86_64-unknown-linux-musl.tgz \
     | tar -xzf - -C /usr/local/cargo/bin cargo-binstall
