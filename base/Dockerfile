@@ -18,10 +18,9 @@ RUN chown ${BUILDER_USERNAME}:${DEVS_GROUPNAME} /usr/local/rustup &&\
     chmod g+s /usr/local/rustup
 
 USER ${BUILDER_USERNAME}
+RUN rustup update
 RUN rustup target add ${RUSTUP_TARGETS}
 RUN rustup component add ${RUSTUP_COMPONENTS}
-RUN rustup toolchain install nightly
-RUN rustup update
 
 RUN curl -sSL https://github.com/cargo-bins/cargo-binstall/releases/latest/download/cargo-binstall-x86_64-unknown-linux-musl.tgz \
     | tar -xzf - -C /usr/local/cargo/bin cargo-binstall
