@@ -4,19 +4,17 @@ services:
             file: "../base/compose.yml"
             service: "base"
     dev:
-        environment:
-            DEV_USER_USERNAME: "dev-user"
         depends_on:
             - "base"
         build:
             context: "."
             dockerfile: "Dockerfile"
             args:
-                DEV_USER_USERNAME: ${DEV_USER_USERNAME}
+                DEV_USER_USERNAME: dev-user
         volumes:
             - "../../:/workspace:cached"
-            - "${HOME}/.ssh/:/home/${DEV_USER_USERNAME}/.ssh/:ro"
-            - "${HOME}/.gitconfig:/home/${DEV_USER_USERNAME}/.gitconfig:ro"
+            - "${HOME}/.ssh/:/home/dev-user/.ssh/:ro"
+            - "${HOME}/.gitconfig:/home/dev-user/.gitconfig:ro"
         env_file:
             - "../../.devcontainer.env"
         command: /bin/sh -c "while sleep 1000; do :; done"
