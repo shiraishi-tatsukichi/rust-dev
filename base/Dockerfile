@@ -12,9 +12,10 @@ RUN groupadd --system --gid ${DEVS_GID} ${DEVS_GROUPNAME}
 RUN useradd --system --uid ${BUILDER_UID} --shell /bin/bash ${BUILDER_USERNAME} &&\
     usermod --append --groups ${DEVS_GROUPNAME} ${BUILDER_USERNAME}
 
-RUN chown ${BUILDER_USERNAME}:${DEVS_GROUPNAME} /usr/local/cargo &&\
+# rustup, cargo のディレクトリ所有権を builder:devs へ
+RUN chown --recursive ${BUILDER_USERNAME}:${DEVS_GROUPNAME} /usr/local/cargo &&\
     chmod g+s /usr/local/cargo
-RUN chown ${BUILDER_USERNAME}:${DEVS_GROUPNAME} /usr/local/rustup &&\
+RUN chown --recursive ${BUILDER_USERNAME}:${DEVS_GROUPNAME} /usr/local/rustup &&\
     chmod g+s /usr/local/rustup
 
 USER ${BUILDER_USERNAME}
