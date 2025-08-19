@@ -19,7 +19,6 @@ RUN chown --recursive ${BUILDER_USERNAME}:${DEVS_GROUPNAME} /usr/local/rustup &&
     chmod g+s /usr/local/rustup
 
 USER ${BUILDER_USERNAME}
-RUN rustup update
 RUN rustup target add ${RUSTUP_TARGETS}
 RUN rustup component add ${RUSTUP_COMPONENTS}
 
