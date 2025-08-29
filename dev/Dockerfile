@@ -15,5 +15,6 @@ RUN useradd --create-home --uid ${DEV_USER_UID} --shell /bin/zsh ${DEV_USER_USER
 
 USER ${BUILDER_USERNAME}
 RUN cargo binstall stylance-cli --locked -y
+RUN cargo binstall mdbook mdbook-mermaid mdbook-pdf mdbook-pandoc --locked -y
 
 USER ${DEV_USER_USERNAME}
