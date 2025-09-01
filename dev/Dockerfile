@@ -1,6 +1,6 @@
 FROM rust-base:latest
-ARG DEVS_GROUPNAME="devs"
 ARG BUILDER_USERNAME="builder"
+ARG BUILDER_GROUPNAME=${BUILDER_USERNAME}
 ARG DEV_USER_USERNAME="dev-user"
 ARG DEV_USER_UID="1000"
 
@@ -13,15 +13,17 @@ RUN apt-get update && apt-get install pandoc -y
 
 # dev-user ユーザー作成
 RUN useradd --create-home --uid ${DEV_USER_UID} --shell /bin/zsh ${DEV_USER_USERNAME} &&\
-    usermod --append --groups ${DEVS_GROUPNAME} ${DEV_USER_USERNAME}
+    usermod --append --groups ${BUILDER_GROUPNAME} ${DEV_USER_USERNAME}
 
 USER ${BUILDER_USERNAME}
-RUN cargo binstall stylance-cli -y
-RUN cargo binstall mdbook -y
-RUN cargo binstall mdbook-mermaid -y
-RUN cargo binstall mdbook-metadata -y
-RUN cargo binstall mdbook-pandoc -y
-RUN cargo binstall mdbook-codename -y
+RUN cargo install stylance-cli
+RUN cargo install mdbook
+RUN cargo install mdbook-mermaid
+RUN cargo install mdbook-metadata
+RUN cargo install mdbook-pandoc
+RUN cargo install mdbook-codename
 RUN cargo install mdbook-pdf --features fetch
+
+RUN chmod g+rw -R /usr/local/cargo/registry
 
 USER ${DEV_USER_USERNAME}
