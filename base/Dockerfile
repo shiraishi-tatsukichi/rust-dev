@@ -1,23 +1,22 @@
 FROM docker.io/rustlang/rust:nightly-bookworm
 ARG RUSTUP_TARGETS="wasm32-unknown-unknown x86_64-unknown-linux-gnu"
 ARG RUSTUP_COMPONENTS="rustc cargo rustfmt rust-analyzer"
-ARG DEVS_GROUPNAME="devs"
-ARG DEVS_GID="999"
 ARG BUILDER_USERNAME="builder"
-ARG BUILDER_UID="998"
+ARG BUILDER_GROUPNAME=${BUILDER_USERNAME}
+ARG BUILDER_UID="999"
+ARG BUILDER_GID="999"
 
-# devs グループ作成
-RUN groupadd --system --gid ${DEVS_GID} ${DEVS_GROUPNAME}
+# builder グループ作成
+RUN groupadd --system --gid ${BUILDER_GID} ${BUILDER_GROUPNAME}
 # builder ユーザー作成
-RUN useradd --system --uid ${BUILDER_UID} --shell /bin/bash ${BUILDER_USERNAME} &&\
-    usermod --append --groups ${DEVS_GROUPNAME} ${BUILDER_USERNAME}
+RUN useradd --system --uid ${BUILDER_UID} --gid ${BUILDER_GID} --shell /bin/bash ${BUILDER_USERNAME}
 
-# rustup, cargo のディレクトリ所有権を builder:devs へ
-RUN chown --recursive ${BUILDER_USERNAME}:${DEVS_GROUPNAME} /usr/local/cargo &&\
-    chmod g+rw -R /usr/local/cargo &&\
+# rustup, cargo のディレクトリ所有権を builder:builder へ
+RUN chown --recursive ${BUILDER_USERNAME}:${BUILDER_GROUPNAME} /usr/local/cargo && \
+    chmod g+rw -R /usr/local/cargo && \
     chmod g+s /usr/local/cargo
-RUN chown --recursive ${BUILDER_USERNAME}:${DEVS_GROUPNAME} /usr/local/rustup &&\
-    chmod g+rw -R /usr/local/rustup &&\
+RUN chown --recursive ${BUILDER_USERNAME}:${BUILDER_GROUPNAME} /usr/local/rustup && \
+    chmod g+rw -R /usr/local/rustup && \
     chmod g+s /usr/local/rustup
 
 USER ${BUILDER_USERNAME}
