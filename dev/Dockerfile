@@ -9,7 +9,9 @@ USER root
 # zsh インストール
 RUN apt-get update && apt-get install zsh -y
 
-RUN apt-get update && apt-get install pandoc -y
+# pandoc インストール
+RUN wget https://github.com/jgm/pandoc/releases/download/3.8/pandoc-3.8-1-amd64.deb
+RUN dpkg -i pandoc-3.8-1-amd64.deb
 
 # dev-user ユーザー作成
 RUN useradd --create-home --uid ${DEV_USER_UID} --shell /bin/zsh ${DEV_USER_USERNAME} &&\
