@@ -1,29 +1,33 @@
 services:
-    base:
-        extends:
-            file: "../base/compose.yml"
-            service: "base"
-    dev:
-        depends_on:
-            - "base"
-        user: "${UID}:${GID}"
-        build:
-            context: "."
-            dockerfile: "Dockerfile"
-            args:
-                DEV_USER_USERNAME: dev-user
-        volumes:
-            - type: bind
-              source: "../../"
-              target: "/workspace"
-            - type: bind
-              source: "${HOME}/.ssh/"
-              target: "/home/dev-user/.ssh/"
-              read_only: true
-            - type: bind
-              source: "${HOME}/.gitconfig"
-              target: "/home/dev-user/.gitconfig"
-              read_only: true
-        env_file:
-            - "../../.devcontainer.env"
-        command: /bin/sh -c "while sleep 1000; do :; done"
+  base:
+    extends:
+      file: "../base/compose.yml"
+      service: "base"
+  dev:
+    depends_on:
+      - "base"
+    user: "${UID}:${GID}"
+    build:
+      context: "."
+      dockerfile: "Dockerfile"
+      args:
+        DEV_USER_USERNAME: dev-user
+    volumes:
+      - type: bind
+        source: "../../"
+        target: "/workspace"
+      - type: bind
+        source: "${HOME}/.ssh/"
+        target: "/home/dev-user/.ssh/"
+        read_only: true
+      - type: bind
+        source: "${HOME}/.gitconfig"
+        target: "/home/dev-user/.gitconfig"
+        read_only: true
+      - type: bind
+        source: "${HOME}/.config/gcloud"
+        target: "/home/dev-user/.config/gcloud"
+        read_only: true
+    env_file:
+      - "../../.devcontainer.env"
+    command: /bin/sh -c "while sleep 1000; do :; done"
